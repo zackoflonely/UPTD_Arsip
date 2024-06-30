@@ -1,5 +1,5 @@
 import { Sidebar } from 'flowbite-react';
-import { HiArrowSmRight, HiChartPie, HiInbox, HiUser,HiHome } from 'react-icons/hi';
+import { HiArrowSmRight, HiChartPie, HiInbox,HiHome } from 'react-icons/hi';
 import img from '../assets/logo-dispora.png';
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
@@ -45,12 +45,7 @@ export default function MyPage({isOpen}) {
             <Sidebar.Item><Link to="/surat-masuk">Surat Masuk</Link></Sidebar.Item>
             <Sidebar.Item><Link to="/surat-keluar">Surat Keluar</Link></Sidebar.Item>
           </Sidebar.Collapse>
-          <Sidebar.Item icon={HiInbox}><Link to="/upload">Input</Link></Sidebar.Item>
-          <Sidebar.Item href="#" icon={HiUser}>
-            <Link to='/user'>
-              Users
-            </Link>
-          </Sidebar.Item>
+          <Sidebar.Item icon={HiInbox}><Link to="/klasifikasi">klasifikasi</Link></Sidebar.Item>
           {isLoggedIn?(
             <Sidebar.Item href="#" icon={HiArrowSmRight}>
               <div onClick={logOut} className='text-red-500 font-bold'>

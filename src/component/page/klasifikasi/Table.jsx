@@ -1,12 +1,14 @@
 'use client';
-import { Table } from 'flowbite-react';
+import { Button, Table } from 'flowbite-react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function TableData({getKonten}) {
-  const handleRemove = async(ID_Surat)=>{
+  const handleRemove = async(ID_Klasifikasi)=>{
     try {
       const confirmation = await Swal.fire({
         title: "Konfirmasi Hapus?",
@@ -16,11 +18,11 @@ export default function TableData({getKonten}) {
         icon: "warning"
       });
       if(confirmation.isConfirmed){
-        const response = await Axios.delete(`http://localhost:8000/api/delete/${ID_Surat}`);
+        const response = await Axios.delete(`http://localhost:8000/api/delete/klasifikasi/${ID_Klasifikasi}`);
         if (response.status === 200) {
           Swal.fire({
             title: "Berhasil",
-            text: "Surat berhasil dihapus",
+            text: "Klasifikasi berhasil dihapus",
             icon: "success"
           }).then(()=>{
             window.location.reload();
@@ -30,7 +32,7 @@ export default function TableData({getKonten}) {
             const errorMessage = await response.text();
             Swal.fire({
               title: "Gagal",
-              text: `Gagal Menghapus Surat ${errorMessage}`,
+              text: `Gagal Menghapus Klasifikasi ${errorMessage}`,
               icon: "error"
             })
         }
@@ -41,17 +43,14 @@ export default function TableData({getKonten}) {
   }
   return (
     <div className="overflow-x-auto my-3 w-full">
+      <Link to='/upload/klasifikasi'>
+          <Button color="light" className="my-2 bg-white border-lg-black text-black hover:font-bold font-base"><FontAwesomeIcon style={{ fontSize: '0.8em', marginRight:'3px' }} icon={faPlus} />Klasifikasi</Button>
+      </Link>
       <Table hoverable>
         <Table.Head className='text-center'>
-          <Table.HeadCell>No</Table.HeadCell>
           <Table.HeadCell>Klasifikasi</Table.HeadCell>
-          <Table.HeadCell className='px-12'>Tanggal Keluar</Table.HeadCell>
-          <Table.HeadCell className='px-32'>Tujuan</Table.HeadCell>
-          <Table.HeadCell>Nomor Surat</Table.HeadCell>
-          <Table.HeadCell className='px-32'>Perihal</Table.HeadCell>
-          <Table.HeadCell>Kaitan</Table.HeadCell>
           <Table.HeadCell className='px-32'>Keterangan</Table.HeadCell>
-          <Table.HeadCell colSpan={3}>Aksi</Table.HeadCell>
+          <Table.HeadCell colSpan={2}>Aksi</Table.HeadCell>
           <Table.HeadCell>
             <span className="sr-only">Edit</span>
           </Table.HeadCell>
@@ -59,29 +58,16 @@ export default function TableData({getKonten}) {
         <Table.Body className="divide-y">
           {getKonten.map((item,idx)=>(
             <Table.Row key={idx} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {item.No_Urut}
-              </Table.Cell>
-              <Table.Cell>{item.Klasifikasi}</Table.Cell>
-              <Table.Cell className='text-center'>{new Date(item.Waktu).toLocaleDateString('id-ID')}</Table.Cell>
-              <Table.Cell>{item.Tujuan}</Table.Cell>
-              <Table.Cell>{item.Nomor_Surat}</Table.Cell>
-              <Table.Cell>{item.Perihal}</Table.Cell>
-              <Table.Cell>{item.Kaitan}</Table.Cell>
-              <Table.Cell>{item.Keterangan}</Table.Cell>
+              <Table.Cell className='text-center'>{item.ID_Klasifikasi}</Table.Cell>
+              <Table.Cell className='text-center'>{item.Keterangan}</Table.Cell>
               <Table.Cell>
-                <Link to={`/edit/${item.ID_Surat}`} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+                <Link to={`/edit/klasifikasi/${item.ID_Klasifikasi}`} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
                   Edit
                 </Link>
               </Table.Cell>
               <Table.Cell>
-                <Link onClick={()=>handleRemove(item.ID_Surat)} className="font-medium text-red-600 hover:underline dark:text-red-500">
+                <Link onClick={()=>handleRemove(item.ID_Klasifikasi)} className="font-medium text-red-600 hover:underline dark:text-red-500">
                   Remove
-                </Link>
-              </Table.Cell>
-              <Table.Cell>
-                <Link to={`/surat/${item.ID_Surat}`} className="font-medium text-green-600 hover:underline dark:text-red-500">
-                  See
                 </Link>
               </Table.Cell>
             </Table.Row>

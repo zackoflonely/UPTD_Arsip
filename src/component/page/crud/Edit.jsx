@@ -175,7 +175,7 @@ function Edit() {
         </div>
 
         <Button onClick={handleUpdate} type="button" variant="contained" className="w-full" color="primary">
-          Upload
+          Edit
         </Button>
       </form>
     </Container>

@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TableData from "../Table";
+import TableKlasifikasi from "./klasifikasi/Table";
 import { faMailBulk, faPenClip, faPencilAlt, faPencilRuler, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Button } from "flowbite-react";
 import { useEffect, useState } from "react";
 import Axios from 'axios';
 import img1 from '../../assets/img1.png';
-import image4 from '../../assets/image4.png';
 import { Chart as ChartJS } from "chart.js/auto";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 
@@ -20,13 +20,25 @@ function Inventaris(){
         getSuratAll();
         getSurat5week();
         getSuratmonth();
+        getKlasifikasi();
+        getKlasData();
         window.scrollTo(0, 0);
     }, []); 
-      const [getKonten,setKonten]= useState([]);
-      const getSurat = async () => {
-          const response = await Axios.get("http://localhost:8000/api/get");
-          setKonten(response.data);
-        };
+    const [getKonten,setKonten]= useState([]);
+    const getSurat = async () => {
+        const response = await Axios.get("http://localhost:8000/api/get");
+        setKonten(response.data);
+    };
+    const [getTotKlas,setTotKlas]= useState([]);
+    const getKlasifikasi = async () => {
+        const response = await Axios.get("http://localhost:8000/api/surat/klasifikasi");
+        setTotKlas(response.data);
+    };
+    const [getKlas,setKlas]= useState([]);
+    const getKlasData = async () => {
+        const response = await Axios.get("http://localhost:8000/api/klasifikasi");
+        setKlas(response.data);
+    };
     const [getYear,setYear]= useState([]);
     const getSuratYear = async () => {
         const response = await Axios.get("http://localhost:8000/api/surat/year");
@@ -92,6 +104,7 @@ function Inventaris(){
                     <Button color="light" className="my-2 bg-white border-lg-black text-black hover:font-bold font-base"><FontAwesomeIcon style={{ fontSize: '0.8em', marginRight:'3px' }} icon={faPlus} />Surat</Button>
                 </Link>
                 <TableData getKonten={getKonten.slice(0,10)}/>
+                <TableKlasifikasi getKonten={getKlas.slice(0,10)}/>
                 <div className="grid grid-cols-2 gap-2 text-left">
                     <div className="flex justify-start items-center border border-md rounded-md p-5">
                         {getAll.map((item,idx)=>(
@@ -149,6 +162,14 @@ function Inventaris(){
                     ))}
                 </div>
                 <div className="flex h-60 mb-3 justify-center items-center border border-md rounded-md py-5">
+                    {getTotKlas.map((item,idx)=>(
+                        <div key={idx}>
+                            <h2 className="text-md">Jumlah Klasifikasi</h2> 
+                            <h3 className="text-3xl font-bold">{item.jumlah_klasifikasi} <FontAwesomeIcon style={{ fontSize: '1em' }} icon={faPencilAlt}/></h3>
+                        </div>
+                    ))}
+                </div>
+                <div className="flex h-60 mb-3 justify-center items-center border border-md rounded-md py-5">
                     {get5week.map((item,idx)=>(
                         <div key={idx}>
                             <h2 className="text-md">Jumlah Surat 4 Minggu Terakhir</h2> 
@@ -169,9 +190,6 @@ function Inventaris(){
                             </Bar>
                         </div>
                     ))}
-                </div>
-                <div className="flex justify-center items-center border border-md rounded-md h-full my-2">
-                    <img className="h-full w-auto object-cover" src={image4} alt="" />
                 </div>
             </div>
         </div>

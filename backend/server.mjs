@@ -151,9 +151,83 @@ server.get('/api/klasifikasi', (req, res) => {
   });
 });
 
+//api untuk insert klasifikasi
+server.post('/api/insert/klasifikasi', upload.none(), (req, res) => {
+  db.connect(() => {
+    const { Klasifikasi, Keterangan} = req.body;
+    const sqlInsert = `INSERT INTO klasifikasi (ID_Klasifikasi, Keterangan) VALUES (?, ?)`;
+    const values = [Klasifikasi, Keterangan];
+
+    db.query(sqlInsert, values, (err, fields) => {
+      if (err) {
+        console.error('Error = ',err);
+        res.status(500).send('Gagal menyimpan data.');
+      } else {
+        if (fields.affectedRows) {
+          response(200, "INI INSERT", "BERHASIL", res);
+        } else {
+          console.log("Gagal menyimpan data.");
+        }
+        console.log(fields);
+      }
+    });
+  })
+});
+
+//api untuk update klasifikasi
+server.put('/api/update/klasfikasi/:ID_Klasifikasi', (req, res) => {
+  const ID_Klasifikasi = req.params.ID_Klasifikasi;
+  db.connect(() => {
+    const { Klasifikasi, Keterangan} = req.body;
+    const sqlInsert = `UPDATE klasifikasi set ID_Klasifikasi = ?, Keterangan = ?  WHERE ID_Klasifikasi = ?`;
+    const values = [Klasifikasi, Keterangan, ID_Klasifikasi];
+    db.query(sqlInsert, values, (err, fields) => {
+      if (err) {
+        console.error('Error = ',err);
+        res.status(500).send('Gagal menyimpan data.');
+      } else {
+        if (fields.affectedRows) {
+          response(200, "INI INSERT", "BERHASIL", res);
+        } else {
+          console.log("Gagal menyimpan data.");
+        }
+        console.log(fields);
+      }
+    });
+  })
+});
+
+//api menghapus klasifikasi
+server.delete('/api/delete/klasifikasi/:ID_Klasifikasi', (req, res) => {
+  const ID_Klasifikasi = req.params.ID_Klasifikasi;
+  db.connect(() => {
+    const sqlSelect = "DELETE FROM klasifikasi WHERE ID_Klasifikasi = ?";
+    const value = [ID_Klasifikasi]
+    db.query(sqlSelect, value, (err, result) => {
+      if (err) {
+        console.error('Error:', err);
+        return res.status(500).send('Gagal menghapus data.');
+      }
+      if (result.affectedRows) {
+        res.status(200).send('Data berhasil dihapus');
+      } else {
+        res.status(404).send('Data tidak ditemukan');
+      }
+    });
+  })
+});
+
 //api hitung surat tahun sekarang
 server.get('/api/surat/year', (req, res) => {
   const sqlSelect = "SELECT COUNT(*) AS jumlah_surat FROM surat WHERE YEAR(Waktu) = YEAR(CURDATE())";
+  db.query(sqlSelect, (err, result) => {
+      res.send(result);
+  });
+});
+
+//api hitung jumlah klasifikasi
+server.get('/api/surat/klasifikasi', (req, res) => {
+  const sqlSelect = "SELECT COUNT(*) AS jumlah_klasifikasi FROM klasifikasi";
   db.query(sqlSelect, (err, result) => {
       res.send(result);
   });
@@ -243,7 +317,6 @@ server.get('/api/getAcc', (req, res) => {
 server.post('/api/auth', (req, res) => {
   const { userId, userToken } = req.body;
   authDataMap.set(userToken,{ userId, userToken });
-  console.log('login auth',authDataMap);
   const responseData = {
     status: 'success',
     message: 'Autentikasi berhasil!',
@@ -294,6 +367,16 @@ server.get('/api/detail_surat/:ID_Surat', (req, res) => {
   const { ID_Surat} = req.params;
   const sqlSelect = "SELECT * FROM surat WHERE ID_Surat = ?";
   const values = [ID_Surat];
+  db.query(sqlSelect, values, (err, result) => {
+      res.send(result);
+  });
+});
+
+//api detail klasifikasi
+server.get('/api/detail_klasifikasi/:ID_Klasifikasi', (req, res) => {
+  const { ID_Klasifikasi} = req.params;
+  const sqlSelect = "SELECT * FROM klasifikasi WHERE ID_Klasifikasi = ?";
+  const values = [ID_Klasifikasi];
   db.query(sqlSelect, values, (err, result) => {
       res.send(result);
   });
