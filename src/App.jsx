@@ -17,6 +17,7 @@ import SuratKeluar from './component/page/surat/SuratKeluar'
 import User from './component/page/User'
 import TableData from './component/page/klasifikasi/Table'
 import Axios from 'axios'
+import Search from './component/page/Search'
 
 function App() {
   const [isOpen, setIsOpen] = useState(true);
@@ -53,6 +54,7 @@ function App() {
           {isLoggedIn?(<>
             <Route path='/*' element={<Navigate to='/'/>}/>
             <Route path='/' element={<Inventaris />}/>
+            <Route path='/search' element={<Search />}/>
             <Route path='/edit/:id' element={<Edit/>} />
             <Route path='/edit/klasifikasi/:id' element={<EditKlas/>} />
             <Route path='/surat/:id' element={<Detail/>} />

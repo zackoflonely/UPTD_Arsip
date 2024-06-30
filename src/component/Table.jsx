@@ -41,8 +41,8 @@ export default function TableData({getKonten}) {
   }
   return (
     <div className="overflow-x-auto my-3 w-full">
-      <Table hoverable>
-        <Table.Head className='text-center'>
+      <Table hoverable className='border border-md'>
+        <Table.Head className='text-center border-b-2 border-black'>
           <Table.HeadCell>No</Table.HeadCell>
           <Table.HeadCell>Klasifikasi</Table.HeadCell>
           <Table.HeadCell className='px-12'>Tanggal Keluar</Table.HeadCell>
@@ -62,13 +62,13 @@ export default function TableData({getKonten}) {
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                 {item.No_Urut}
               </Table.Cell>
-              <Table.Cell>{item.Klasifikasi}</Table.Cell>
+              <Table.Cell className='text-center'>{item.Klasifikasi}</Table.Cell>
               <Table.Cell className='text-center'>{new Date(item.Waktu).toLocaleDateString('id-ID')}</Table.Cell>
-              <Table.Cell>{item.Tujuan}</Table.Cell>
-              <Table.Cell>{item.Nomor_Surat}</Table.Cell>
-              <Table.Cell>{item.Perihal}</Table.Cell>
-              <Table.Cell>{item.Kaitan}</Table.Cell>
-              <Table.Cell>{item.Keterangan}</Table.Cell>
+              <Table.Cell className='text-center'>{item.Tujuan}</Table.Cell>
+              <Table.Cell className='text-center'>{item.Nomor_Surat}</Table.Cell>
+              <Table.Cell className='text-center'>{item.Perihal}</Table.Cell>
+              <Table.Cell className='text-center'>{item.Kaitan}</Table.Cell>
+              <Table.Cell className='text-center'>{item.Keterangan}</Table.Cell>
               <Table.Cell>
                 <Link to={`/edit/${item.ID_Surat}`} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
                   Edit

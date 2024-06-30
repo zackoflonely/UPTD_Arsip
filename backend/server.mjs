@@ -291,21 +291,6 @@ server.get('/api/surat/month', (req, res) => {
   });
 });
 
-//api search
-server.get('/api/search/surat', (req, res) => {
-  const searchKeyword = req.query.keyword;
-  if (!searchKeyword) {
-      return res.status(400).send({ error: 'Keyword is required' });
-  }
-  const sqlSelect = "SELECT * FROM surat WHERE Perihal REGEXP ?";
-  db.query(sqlSelect, [searchKeyword], (err, result) => {
-      if (err) {
-          return res.status(500).send(err);
-      }
-      res.send(result);
-  });
-});
-
 //api login
 server.get('/api/getAcc', (req, res) => {
   const sqlSelect = "SELECT * FROM user";
@@ -378,6 +363,21 @@ server.get('/api/detail_klasifikasi/:ID_Klasifikasi', (req, res) => {
   const sqlSelect = "SELECT * FROM klasifikasi WHERE ID_Klasifikasi = ?";
   const values = [ID_Klasifikasi];
   db.query(sqlSelect, values, (err, result) => {
+      res.send(result);
+  });
+});
+
+//search surat
+server.get('/api/search/surat', (req, res) => {
+  const searchKeyword = req.query.keyword;
+  if (!searchKeyword) {
+      return res.status(400).send({ error: 'Keyword is required' });
+  }
+  const sqlSelect = "SELECT * FROM surat WHERE Perihal REGEXP ? OR Nomor_Surat REGEXP ? OR Tujuan REGEXP ?";
+  db.query(sqlSelect, [searchKeyword, searchKeyword, searchKeyword], (err, result) => {
+      if (err) {
+          return res.status(500).send(err);
+      }
       res.send(result);
   });
 });

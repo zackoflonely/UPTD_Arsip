@@ -46,8 +46,8 @@ export default function TableData({getKonten}) {
       <Link to='/upload/klasifikasi'>
           <Button color="light" className="my-2 bg-white border-lg-black text-black hover:font-bold font-base"><FontAwesomeIcon style={{ fontSize: '0.8em', marginRight:'3px' }} icon={faPlus} />Klasifikasi</Button>
       </Link>
-      <Table hoverable>
-        <Table.Head className='text-center'>
+      <Table hoverable className='border border-md'>
+        <Table.Head className='text-center border-b-2 border-black'>
           <Table.HeadCell>Klasifikasi</Table.HeadCell>
           <Table.HeadCell className='px-32'>Keterangan</Table.HeadCell>
           <Table.HeadCell colSpan={2}>Aksi</Table.HeadCell>
