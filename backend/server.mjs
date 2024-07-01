@@ -91,7 +91,7 @@ server.put('/api/update/:ID_Surat', (req, res) => {
 
 //api menampilkan data surat
 server.get('/api/get', (req, res) => {
-    const sqlSelect = "SELECT * FROM surat ORDER BY No_Urut ASC";
+    const sqlSelect = "SELECT * FROM surat ORDER BY YEAR(Waktu) DESC, No_Urut ASC";
     db.query(sqlSelect, (err, result) => {
         res.send(result);
     });
@@ -100,7 +100,7 @@ server.get('/api/get', (req, res) => {
 //api menampilkan data surat masuk
 server.get('/api/suratMasuk/:tahun', (req, res) => {
   const Tahun = req.params.tahun;
-  const sqlSelect = "SELECT * FROM surat WHERE Jenis = 'Surat Masuk' AND YEAR(Waktu) = ?";
+  const sqlSelect = "SELECT * FROM surat WHERE Jenis = 'Surat Masuk' AND YEAR(Waktu) = ? ORDER BY No_Urut ASC";
   db.query(sqlSelect, [Tahun], (err, result) => {
       res.send(result);
   });
@@ -109,7 +109,7 @@ server.get('/api/suratMasuk/:tahun', (req, res) => {
 //api menampilkan data surat keluar
 server.get('/api/suratKeluar/:tahun', (req, res) => {
   const Tahun = req.params.tahun;
-  const sqlSelect = "SELECT * FROM surat WHERE Jenis = 'Surat Keluar' AND YEAR(Waktu) = ?";
+  const sqlSelect = "SELECT * FROM surat WHERE Jenis = 'Surat Keluar' AND YEAR(Waktu) = ? ORDER BY No_Urut ASC";
   db.query(sqlSelect, [Tahun], (err, result) => {
       res.send(result);
   });

@@ -79,7 +79,7 @@ function Edit() {
     <div className="my-5 text-left w-full">
     <Container>
       <Typography variant="h4" align="center" gutterBottom>
-        Arsip Surat
+        Edit Surat
       </Typography>
 
       <form onSubmit={handleUpdate}>

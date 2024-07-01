@@ -1,9 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TableData from "../../Table";
-import { faMailBulk } from "@fortawesome/free-solid-svg-icons";
+import { faMailBulk, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Axios from 'axios';
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Link } from "react-router-dom";
+import { Button } from "flowbite-react";
 
 function SuratKeluar(){
     const [getKonten,setKonten]= useState([]);
@@ -41,6 +43,9 @@ function SuratKeluar(){
             <h1 className="w-full my-3 text-left text-3xl font-semibold font-mono">
                 <FontAwesomeIcon style={{ fontSize: '1em' }} icon={faMailBulk}/> Surat Keluar
             </h1>
+            <Link to='/upload'>
+                <Button color="light" className="my-2 bg-white border-lg-black text-black hover:font-bold font-base"><FontAwesomeIcon style={{ fontSize: '0.8em', marginRight:'3px' }} icon={faPlus} />Surat</Button>
+            </Link>
             <TableData getKonten={getKonten}/>
         </div>
     )

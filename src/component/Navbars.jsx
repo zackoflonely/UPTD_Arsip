@@ -33,7 +33,7 @@ function Navbars({isOpen}){
                 <FontAwesomeIcon style={{ fontSize: '1em' }} icon={faHome}/>
                 <span className="mx-3 font-mono text-md text-slate-600">..{location.pathname}</span>
             </Link>
-            <div className={`w-full flex ${isOpen ? 'ml-40' : 'justify-end mr-6'}`}>                
+            <div className={`w-full flex ${isOpen ? 'ml-28' : 'justify-end mr-10'}`}>                
                 <form className="flex items-center">
                     <i className="absolute mx-3"><FontAwesomeIcon style={{ fontSize: '1em' }} icon={faSearch}/></i>
                     <input onChange={handleInputChange} value={searchTerm} type="text" id="default-search" className="block w-full ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50" placeholder="Search" required/>

@@ -23,7 +23,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(true);
   const isLoggedIn = localStorage.getItem("token") !== null;
   const location = useLocation();
-  const isLoginOrRegister = location.pathname === '/Login' || location.pathname === '/register' || location.pathname === '/login';
+  const isLoginOrRegister = location.pathname === '/Login' || location.pathname === '/login';
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -49,7 +49,7 @@ function App() {
           </div>
         </div>
       }
-      <div className={`w-full  ${isOpen && !isLoginOrRegister ? 'ml-72' : 'ml-0'} ${isLoginOrRegister ? '':'mr-6 ml-10 my-16'} overflow-y-auto`} >
+      <div className={`w-full  ${isOpen && !isLoginOrRegister ? 'ml-72' : 'ml-0'} ${isLoginOrRegister ? '':'mr-10 ml-10 my-16'} overflow-y-auto`} >
         <Routes>
           {isLoggedIn?(<>
             <Route path='/*' element={<Navigate to='/'/>}/>
